@@ -1,4 +1,4 @@
-# 1. Manage tool dependencies using asdf
+# 2. Manage tool dependencies using asdf
 
 Date: 2022-11-14
 
