@@ -1,7 +1,7 @@
 # Infrakit System Requirements
 
-Infrakit will provide a toolkit to run two major systems of the Decentralized Infrastructure
-Network: Infrastructure Providers, and Ingress Operators.
+Infrakit will provide a toolkit to run the major systems of the Decentralized Infrastructure
+Network: Infrastructure Providers, Ingress Operators, and Network Watchers.
 
 ## Shared Requirements (KIT)
 
@@ -21,7 +21,7 @@ The community is unlikely to have interest if licensed under anything other than
 
 | Number  | Requirement |
 | ------- | ----------- |
-| [PRO-001](#pro-001) | Must support the Ethereum Layer 1 Protocol JSON-RPC API. |
+| [PRO-001](#pro-001) | Must initially support at least the Ethereum Layer 1 Protocol JSON-RPC API. |
 | [PRO-002](#pro-002) | Must support provisioning new blockchain nodes quickly via filesystem snapshots. |
 | [PRO-003](#pro-003) | Must authenticate and authorize requests signed with an Ethereum private key. |
 | [PRO-004](#pro-004) | Must be configurable with an Ethereum private key to sign responses. |
@@ -61,3 +61,14 @@ For example, consecutive call to `eth_blockNumber` should increase monotonically
 Sending requests to multiple providers can help ensure accuracy and availability.
 
 - Load balancing, failover, cocktail, etc...
+
+## Network Watchers (WAT)
+
+| Number  | Requirement |
+| ------- | ----------- |
+| [WAT-001](#wat-001) | Must implement a comprehensive suite of tests that can be ran against infrastructure providers. |
+| [WAT-002](#wat-002) | Must be configurable to monitor multiple infrastructure providers. |
+| [WAT-003](#wat-003) | Must publish a publicly consumable stream of results. |
+| [WAT-004](#wat-004) | Must be configurable with an Ethereum private key to sign published results. |
+
+**Details/Notes:**
