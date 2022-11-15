@@ -7,8 +7,8 @@ Network: Infrastructure Providers, and Ingress Operators.
 
 | Number  | Requirement |
 | ------- | ----------- |
-| KIT-001 | Must support provisioning into a kubernetes cluster on the 3 major cloud providers (AWS, GCP, Azure). |
-| KIT-002 | Must be written in a popular programming language that encourages community contribution. |
+| [KIT-001](#kit-001) | Must support provisioning into a kubernetes cluster on the 3 major cloud providers (AWS, GCP, Azure). |
+| [KIT-002](#kit-002) | Must be written in a popular programming language that encourages community contribution. |
 | [KIT-003](#kit-003) | Must be developed as a permissively licensed OSS project. |
 
 **Details/Notes:**
@@ -23,8 +23,8 @@ The community is unlikely to have interest if licensed under anything other than
 | ------- | ----------- |
 | [PRO-001](#pro-001) | Must support the Ethereum Layer 1 Protocol JSON-RPC API. |
 | [PRO-002](#pro-002) | Must support provisioning new blockchain nodes quickly via filesystem snapshots. |
-| [PRO-003](#pro-003) | Must accept and authenticate requests signed with an Ethereum private key. |
-| PRO-004 | |
+| [PRO-003](#pro-003) | Must authenticate and authorize requests signed with an Ethereum private key. |
+| [PRO-004](#pro-004) | Must be configurable with an Ethereum private key to sign responses. |
 
 **Details/Notes:**
 
@@ -39,16 +39,16 @@ faster than all other sync options, especially for large historical chain data.
 
 ### PRO-003
 
-Used to determine via the smart contract whether the caller has access and remaining throughput.
+- Signature used to authenticate the identity of the caller.
+- Authorize usage against what the user has paid for.
 
 ## Ingress Operator (ING)
 
 | Number  | Requirement |
 | ------- | ----------- |
 | [ING-001](#ing-001) | Must provide a consistent view of the blockchain. |
-| ING-002 | Must be configurable with an Ethereum private key to sign requests to infrastructure providers. |
+| [ING-002](#ing-002) | Must be configurable with an Ethereum private key to sign requests to infrastructure providers. |
 | [ING-003](#ing-003) | Must be configurable to make use of multiple infrastructure providers. |
-| ING-004 | |
 
 **Details/Notes:**
 
@@ -59,3 +59,5 @@ For example, consecutive call to `eth_blockNumber` should increase monotonically
 ### ING-003
 
 Sending requests to multiple providers can help ensure accuracy and availability.
+
+- Load balancing, failover, cocktail, etc...
