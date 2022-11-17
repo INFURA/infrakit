@@ -15,7 +15,7 @@ Network: Infrastructure Providers, Ingress Operators, and Network Watchers.
 
 ### KIT-003
 
-The community is unlikely to have interest if licensed under anything other than `MIT`.
+The community is unlikely to have interest if licensed under anything other than `MIT`, `Apache 2.0` or similar.
 
 ## Infrastructure Provider (PRO)
 
@@ -29,8 +29,6 @@ The community is unlikely to have interest if licensed under anything other than
 **Details/Notes:**
 
 ### PRO-001
-
-Including Trace API. Not including websockets or subscriptions. Mainnet and testnets.
 
 ### PRO-002
 
