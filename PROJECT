@@ -1,0 +1,6 @@
+domain: infura.io
+layout:
+- go.kubebuilder.io/v4-alpha
+projectName: infrakit
+repo: github.com/INFURA/infrakit
+version: "3"
