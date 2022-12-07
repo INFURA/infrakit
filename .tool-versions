@@ -1,3 +1,4 @@
 adr-tools 3.0.0
-golang 1.19.3
+golang 1.19.4
 kubebuilder 3.8.0
+golangci-lint 1.50.1
