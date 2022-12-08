@@ -1,0 +1,30 @@
+name: golangci-lint
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  golangci:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Retrieve go asdf version
+        run: |
+          echo "GO_VERSION=$(cat .tool-versions | grep 'golang ' | awk '{print $2}')" >> $GITHUB_OUTPUT
+        id: go-version
+      - name: Retrieve golangci asdf version
+        run: |
+          echo "GOLANGCI_VERSION=$(cat .tool-versions | grep golangci-lint | awk '{print $2}')" >> $GITHUB_OUTPUT
+        id: golangci-version
+      # Faster than using asdf thanks to caching, but use the asdf specified version
+      - uses: actions/setup-go@v3
+        with:
+          go-version: ${{ steps.go-version.outputs.GO_VERSION }}
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v${{ steps.golangci-version.outputs.GOLANGCI_VERSION }}
