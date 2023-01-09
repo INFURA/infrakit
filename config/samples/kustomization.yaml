@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- infrakit_v1alpha1_proxy.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples
