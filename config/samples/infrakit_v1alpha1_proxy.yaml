@@ -1,0 +1,12 @@
+apiVersion: infrakit.infura.io/v1alpha1
+kind: Proxy
+metadata:
+  labels:
+    app.kubernetes.io/name: proxy
+    app.kubernetes.io/instance: proxy-sample
+    app.kubernetes.io/part-of: infrakit
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: infrakit
+  name: proxy-sample
+spec:
+  # TODO(user): Add fields here

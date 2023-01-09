@@ -1,0 +1,33 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: manager-role
+rules:
+- apiGroups:
+  - infrakit.infura.io
+  resources:
+  - proxies
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - infrakit.infura.io
+  resources:
+  - proxies/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - infrakit.infura.io
+  resources:
+  - proxies/status
+  verbs:
+  - get
+  - patch
+  - update

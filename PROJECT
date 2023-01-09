@@ -3,4 +3,14 @@ layout:
 - go.kubebuilder.io/v4-alpha
 projectName: infrakit
 repo: github.com/INFURA/infrakit
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: infura.io
+  group: infrakit
+  kind: Proxy
+  path: github.com/INFURA/infrakit/api/v1alpha1
+  version: v1alpha1
 version: "3"
