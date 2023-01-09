@@ -38,12 +38,17 @@ help: ## Display this help.
 ##@ Development
 
 .PHONY: bootstrap
-bootstrap: asdf-bootstrap ## Install project dependencies.
+bootstrap: asdf-bootstrap go-tools-bootstrap ## Install project dependencies.
 
 .PHONY: asdf-bootstrap
 asdf-bootstrap:
 	cat .tool-versions | cut -f 1 -d ' ' | xargs -n 1 asdf plugin-add || true
 	NODEJS_CHECK_SIGNATURES=no asdf install
+
+.PHONY: go-tools-bootstrap
+go-tools-bootstrap:
+	cat tools.go | grep _ | awk -F'"' '{print $$2}' | xargs -tI % go install %
+	asdf reshim golang
 
 .PHONY: manifests
 manifests: controller-gen ## Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects.
