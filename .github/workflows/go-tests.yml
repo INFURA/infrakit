@@ -1,0 +1,21 @@
+name: go-tests
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: bootstrap
+        uses: ./.github/actions/bootstrap
+        with:
+          go-tools: true
+      - name: Run tests
+        run: |
+          ginkgo test ./...
