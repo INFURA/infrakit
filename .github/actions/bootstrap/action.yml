@@ -1,0 +1,27 @@
+name: 'Bootstrap'
+description: 'Tool bootstrapping'
+
+inputs:
+  go-tools:
+    description: 'Install go tools'
+    default: 'false'
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - name: asdf setup
+      uses: asdf-vm/actions/setup@v1
+    - name: asdf install
+      # Fully eclipse installed golang
+      shell: bash
+      run: |
+        make asdf-bootstrap
+        export GOV=$(cat .tool-versions | grep 'golang ' | awk '{print $2}')
+        echo "GOROOT=$HOME/.asdf/installs/golang/$GOV/go/" >> $GITHUB_ENV
+        echo "GOTOOLDIR=$HOME/.asdf/installs/golang/$GOV/go/pkg/tool/linux_amd64" >> $GITHUB_ENV
+    - name: go tools install
+      shell: bash
+      if: ${{ inputs.go-tools == 'true' }}
+      run: |
+        make go-tools-bootstrap
