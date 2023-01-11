@@ -17,6 +17,7 @@ import (
 
 	infrakitv1alpha1 "github.com/INFURA/infrakit/api/v1alpha1"
 	"github.com/INFURA/infrakit/controllers"
+	"github.com/INFURA/infrakit/controllers/proxy"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -73,10 +74,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controllers.ProxyReconciler{
+	if err = (&proxy.MainReconciler{Reconciler: controllers.Reconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
+	}}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "Proxy")
 		os.Exit(1)
 	}
