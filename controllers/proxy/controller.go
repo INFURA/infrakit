@@ -1,20 +1,18 @@
-package controllers
+package proxy
 
 import (
 	"context"
 
-	"k8s.io/apimachinery/pkg/runtime"
+	"github.com/INFURA/infrakit/controllers"
 	ctrl "sigs.k8s.io/controller-runtime"
-	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	infrakitv1alpha1 "github.com/INFURA/infrakit/api/v1alpha1"
 )
 
-// ProxyReconciler reconciles a Proxy object
-type ProxyReconciler struct {
-	client.Client
-	Scheme *runtime.Scheme
+// MainReconciler reconciles a Proxy object
+type MainReconciler struct {
+	controllers.Reconciler
 }
 
 //+kubebuilder:rbac:groups=infrakit.infura.io,resources=proxies,verbs=get;list;watch;create;update;patch;delete
@@ -30,7 +28,7 @@ type ProxyReconciler struct {
 //
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.13.1/pkg/reconcile
-func (r *ProxyReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+func (r *MainReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
 	// TODO(user): your logic here
@@ -39,7 +37,7 @@ func (r *ProxyReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 }
 
 // SetupWithManager sets up the controller with the Manager.
-func (r *ProxyReconciler) SetupWithManager(mgr ctrl.Manager) error {
+func (r *MainReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&infrakitv1alpha1.Proxy{}).
 		Complete(r)

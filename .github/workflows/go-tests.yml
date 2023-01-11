@@ -18,4 +18,4 @@ jobs:
           go-tools: true
       - name: Run tests
         run: |
-          ginkgo test ./...
+          make test
