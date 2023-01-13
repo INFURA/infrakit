@@ -13,6 +13,9 @@ permissions:
   pull-requests: write
   packages: write
 
+env:
+  SEMANTIC_VERSION: 19
+
 jobs:
   release:
     name: release
@@ -30,7 +33,7 @@ jobs:
         id: semantic
         uses: cycjimmy/semantic-release-action@v3
         with:
-          semantic_version: 19
+          semantic_version: ${{ env.SEMANTIC_VERSION }}
           dry_run: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -51,3 +54,10 @@ jobs:
           platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
+      - name: Semantic Release
+        if: steps.semantic.outputs.new_release_version != ''
+        uses: cycjimmy/semantic-release-action@v3
+        with:
+          semantic_version: ${{ env.SEMANTIC_VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
