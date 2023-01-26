@@ -10,6 +10,7 @@ import (
 
 	infrakitv1alpha1 "github.com/INFURA/infrakit/api/v1alpha1"
 	"github.com/INFURA/infrakit/controllers"
+	"github.com/INFURA/infrakit/controllers/podtemplateclientset"
 	"github.com/INFURA/infrakit/controllers/proxy"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -91,6 +92,13 @@ func operatorMain(cmd *cobra.Command, args []string) {
 		Scheme: mgr.GetScheme(),
 	}}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "Proxy")
+		os.Exit(1)
+	}
+	if err = (&podtemplateclientset.MainReconciler{Reconciler: controllers.Reconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "PodTemplateClientSet")
 		os.Exit(1)
 	}
 	//+kubebuilder:scaffold:builder

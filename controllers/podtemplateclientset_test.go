@@ -1,4 +1,4 @@
-package proxy_test
+package controllers_test
 
 import (
 	"context"
@@ -9,15 +9,15 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-var _ = Describe("Proxy controller", func() {
+var _ = Describe("PodTemplateClientSet controller", func() {
 	It("Works", func() {
 		ctx := context.Background()
-		proxy := &infrakitv1alpha1.Proxy{
+		ptcs := &infrakitv1alpha1.PodTemplateClientSet{
 			ObjectMeta: metav1.ObjectMeta{
-				Name:      "test-proxy",
+				Name:      "test-ptcs",
 				Namespace: "default",
 			},
 		}
-		Expect(k8sClient.Create(ctx, proxy)).Should(Succeed())
+		Expect(k8sClient.Create(ctx, ptcs)).Should(Succeed())
 	})
 })

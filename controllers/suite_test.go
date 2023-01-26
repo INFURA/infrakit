@@ -1,4 +1,4 @@
-package proxy_test
+package controllers_test
 
 import (
 	"context"
@@ -18,6 +18,7 @@ import (
 
 	infrakitv1alpha1 "github.com/INFURA/infrakit/api/v1alpha1"
 	"github.com/INFURA/infrakit/controllers"
+	"github.com/INFURA/infrakit/controllers/podtemplateclientset"
 	"github.com/INFURA/infrakit/controllers/proxy"
 	//+kubebuilder:scaffold:imports
 )
@@ -44,7 +45,7 @@ var _ = BeforeSuite(func() {
 
 	By("bootstrapping test environment")
 	testEnv = &envtest.Environment{
-		CRDDirectoryPaths:     []string{filepath.Join("..", "..", "config", "crd", "bases")},
+		CRDDirectoryPaths:     []string{filepath.Join("..", "config", "crd", "bases")},
 		ErrorIfCRDPathMissing: true,
 	}
 
@@ -68,7 +69,13 @@ var _ = BeforeSuite(func() {
 	})
 	Expect(err).ToNot(HaveOccurred())
 
-	err = (&proxy.MainReconciler{controllers.Reconciler{
+	err = (&proxy.MainReconciler{Reconciler: controllers.Reconciler{
+		Client: k8sManager.GetClient(),
+		Scheme: k8sManager.GetScheme(),
+	}}).SetupWithManager(k8sManager)
+	Expect(err).ToNot(HaveOccurred())
+
+	err = (&podtemplateclientset.MainReconciler{Reconciler: controllers.Reconciler{
 		Client: k8sManager.GetClient(),
 		Scheme: k8sManager.GetScheme(),
 	}}).SetupWithManager(k8sManager)
