@@ -1,0 +1,27 @@
+# permissions for end users to view podtemplateclientsets.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: podtemplateclientset-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: infrakit
+    app.kubernetes.io/part-of: infrakit
+    app.kubernetes.io/managed-by: kustomize
+  name: podtemplateclientset-viewer-role
+rules:
+- apiGroups:
+  - infrakit.infura.io
+  resources:
+  - podtemplateclientsets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - infrakit.infura.io
+  resources:
+  - podtemplateclientsets/status
+  verbs:
+  - get

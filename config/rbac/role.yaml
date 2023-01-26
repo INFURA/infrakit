@@ -8,6 +8,32 @@ rules:
 - apiGroups:
   - infrakit.infura.io
   resources:
+  - podtemplateclientsets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - infrakit.infura.io
+  resources:
+  - podtemplateclientsets/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - infrakit.infura.io
+  resources:
+  - podtemplateclientsets/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - infrakit.infura.io
+  resources:
   - proxies
   verbs:
   - create

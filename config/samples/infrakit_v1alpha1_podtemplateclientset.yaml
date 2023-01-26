@@ -1,0 +1,12 @@
+apiVersion: infrakit.infura.io/v1alpha1
+kind: PodTemplateClientSet
+metadata:
+  labels:
+    app.kubernetes.io/name: podtemplateclientset
+    app.kubernetes.io/instance: podtemplateclientset-sample
+    app.kubernetes.io/part-of: infrakit
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: infrakit
+  name: podtemplateclientset-sample
+spec:
+  # TODO(user): Add fields here
