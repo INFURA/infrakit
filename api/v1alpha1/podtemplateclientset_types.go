@@ -1,29 +1,32 @@
 package v1alpha1
 
 import (
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
-
 // PodTemplateClientSetSpec defines the desired state of PodTemplateClientSet
 type PodTemplateClientSetSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// +optional
+	Replicas *int32 `json:"replicas,omitempty"`
 
-	// Foo is an example field of PodTemplateClientSet. Edit podtemplateclientset_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Template corev1.PodTemplateSpec `json:"template"`
 }
 
 // PodTemplateClientSetStatus defines the observed state of PodTemplateClientSet
 type PodTemplateClientSetStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// Current replicas, integrated in /scale subresource
+	Replicas int32 `json:"replicas"`
+
+	// Selector for pods belonging to this ClientSet, integrated in /scale subresource
+	Selector string `json:"selector"`
 }
 
-//+kubebuilder:object:root=true
-//+kubebuilder:subresource:status
+// +kubebuilder:object:root=true
+// +kubebuilder:resource:shortName=ptcs
+// +kubebuilder:subresource:status
+// +kubebuilder:subresource:scale:specpath=.spec.replicas,statuspath=.status.replicas,selectorpath=.status.selector
+// +kubebuilder:printcolumn:JSONPath=".status.replicas",name=Replicas,type=string
 
 // PodTemplateClientSet is the Schema for the podtemplateclientsets API
 type PodTemplateClientSet struct {

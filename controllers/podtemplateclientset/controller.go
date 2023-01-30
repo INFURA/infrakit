@@ -2,12 +2,16 @@ package podtemplateclientset
 
 import (
 	"context"
-
-	"github.com/INFURA/infrakit/controllers"
-	ctrl "sigs.k8s.io/controller-runtime"
-	"sigs.k8s.io/controller-runtime/pkg/log"
+	"fmt"
 
 	infrakitv1alpha1 "github.com/INFURA/infrakit/api/v1alpha1"
+	"github.com/INFURA/infrakit/controllers"
+	"github.com/INFURA/infrakit/pkg/resource"
+	appsv1 "k8s.io/api/apps/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	ctrl "sigs.k8s.io/controller-runtime"
+	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
 // MainReconciler reconciles a PodTemplateClientSet object
@@ -29,9 +33,34 @@ type MainReconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.13.1/pkg/reconcile
 func (r *MainReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = log.FromContext(ctx)
+	log := log.FromContext(ctx)
 
-	// TODO(user): your logic here
+	var ptcs infrakitv1alpha1.PodTemplateClientSet
+
+	err := r.Client.Get(ctx, req.NamespacedName, &ptcs)
+	if err != nil {
+		return ctrl.Result{}, client.IgnoreNotFound(err) //nolint: wrapcheck
+	}
+
+	// TODO: Apply the default settings
+	// ptcs.Default()
+
+	sts := &appsv1.StatefulSet{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      ptcs.Name,
+			Namespace: ptcs.Namespace,
+		},
+		Spec: appsv1.StatefulSetSpec{
+			PodManagementPolicy: appsv1.ParallelPodManagement,
+			Replicas:            ptcs.Spec.Replicas,
+			Template:            ptcs.Spec.Template,
+		},
+	}
+
+	err = resource.ReconcileStatefulSet(ctx, log, r.Client, &ptcs, sts, r.Scheme)
+	if err != nil {
+		return ctrl.Result{}, fmt.Errorf("error reconciling statefulset: %w", err)
+	}
 
 	return ctrl.Result{}, nil
 }
