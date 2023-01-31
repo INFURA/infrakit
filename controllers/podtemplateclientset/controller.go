@@ -7,6 +7,7 @@ import (
 	infrakitv1alpha1 "github.com/INFURA/infrakit/api/v1alpha1"
 	"github.com/INFURA/infrakit/controllers"
 	"github.com/INFURA/infrakit/pkg/resource"
+	"github.com/INFURA/infrakit/pkg/util/label"
 	appsv1 "k8s.io/api/apps/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -45,12 +46,17 @@ func (r *MainReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.
 	// TODO: Apply the default settings
 	// ptcs.Default()
 
+	// Union labels on the PTCS
+	operatorManagedLabels := SubresourceLabels(&ptcs)
+	ptcs.Spec.Template.ObjectMeta.Labels = label.Union(operatorManagedLabels, ptcs.Spec.Template.ObjectMeta.Labels)
+
 	sts := &appsv1.StatefulSet{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      ptcs.Name,
 			Namespace: ptcs.Namespace,
 		},
 		Spec: appsv1.StatefulSetSpec{
+			Selector:            metav1.SetAsLabelSelector(ptcs.Spec.Template.ObjectMeta.Labels),
 			PodManagementPolicy: appsv1.ParallelPodManagement,
 			Replicas:            ptcs.Spec.Replicas,
 			Template:            ptcs.Spec.Template,
