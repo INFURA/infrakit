@@ -1,6 +1,9 @@
 package cmd
 
-import "github.com/spf13/cobra"
+import (
+	"github.com/spf13/cobra"
+	ctrl "sigs.k8s.io/controller-runtime"
+)
 
 type ProxyCmdConfig struct {
 }
@@ -16,5 +19,7 @@ var proxyCmd = &cobra.Command{
 }
 
 func proxyMain(cmd *cobra.Command, args []string) {
-	// Do Stuff Here
+	log := ctrl.Log.WithName("proxy")
+
+	log.Info("logger proxy called")
 }
