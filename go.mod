@@ -3,6 +3,7 @@ module github.com/INFURA/infrakit
 go 1.19
 
 require (
+	github.com/AppsFlyer/go-sundheit v0.5.0
 	github.com/avast/retry-go v3.0.0+incompatible
 	github.com/davecgh/go-spew v1.1.1
 	github.com/go-logr/logr v1.2.3
