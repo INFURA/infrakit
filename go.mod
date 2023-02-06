@@ -6,6 +6,7 @@ require (
 	github.com/AppsFlyer/go-sundheit v0.5.0
 	github.com/avast/retry-go v3.0.0+incompatible
 	github.com/davecgh/go-spew v1.1.1
+	github.com/go-chi/chi/v5 v5.0.8
 	github.com/go-logr/logr v1.2.3
 	github.com/knadh/koanf v1.5.0
 	github.com/onsi/ginkgo v1.16.5

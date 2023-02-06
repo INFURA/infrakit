@@ -1,15 +1,25 @@
 package proxy
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 
 	"github.com/INFURA/infrakit/cmd/opts"
+	"github.com/INFURA/infrakit/pkg/proxy/evm"
 	"github.com/INFURA/infrakit/pkg/proxy/health"
 	"github.com/go-logr/logr"
 )
 
 func RunProxy(log logr.Logger) error {
+	proxy, err := evm.NewProxy(evm.Opts{
+		Log:  log,
+		Addr: opts.ProxyConfig().ListenAddr,
+	})
+	if err != nil {
+		return fmt.Errorf("failed to create proxy: %w", err)
+	}
+
 	mux := http.NewServeMux()
 	mux.Handle("/ready", health.HTTPHandler())
 
@@ -22,6 +32,13 @@ func RunProxy(log logr.Logger) error {
 		log.Error(healthServer.ListenAndServe(), "health server finished unexpectedly")
 		os.Exit(1)
 	}()
+
+	log.Info("Starting up server")
+
+	if err := proxy.Start(); err != nil {
+		log.Error(err, "evm proxy server finished unexpectedly")
+		os.Exit(1)
+	}
 
 	return nil
 }
