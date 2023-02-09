@@ -27,3 +27,7 @@ Dockerfile.cross
 
 .env
 .infrakit.yml
+
+# terraform
+
+.terraform
