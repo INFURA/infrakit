@@ -1,5 +1,5 @@
 module "public_ecr" {
-  count = var.environment == "prod" ? 1 : 0
+  count = var.environment == "dev" ? 1 : 0
 
   source = "terraform-aws-modules/ecr/aws"
 
