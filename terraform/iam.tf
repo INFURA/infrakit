@@ -25,7 +25,7 @@ resource "aws_iam_role" "infrastructure" {
 
 resource "aws_iam_role_policy_attachment" "ecr" {
   role       = aws_iam_role.infrastructure.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonElasticContainerRegistryPublicFullAccess"
 }
 
 data "aws_iam_openid_connect_provider" "github" {
