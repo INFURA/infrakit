@@ -1,5 +1,9 @@
+data "aws_iam_policy" "default_permissions_boundary" {
+  name = "DefaultPermissionBoundary"
+}
 resource "aws_iam_role" "infrastructure" {
   name = "infrastructure"
+  permissions_boundary = data.aws_iam_policy.default_permissions_boundary.arn
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -24,19 +28,13 @@ resource "aws_iam_role_policy_attachment" "ecr" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
 }
 
-resource "aws_iam_openid_connect_provider" "github" {
+data "aws_iam_openid_connect_provider" "github" {
   url = "https://token.actions.githubusercontent.com"
-  thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1"]
-  client_id_list = ["sts.amazonaws.com"]
-
-  tags = {
-    Terraform   = "true"
-    Environment = var.environment
-  }
 }
 
 resource "aws_iam_role" "github" {
   name = "github"
+  permissions_boundary = data.aws_iam_policy.default_permissions_boundary.arn
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -44,7 +42,7 @@ resource "aws_iam_role" "github" {
         Effect = "Allow"
         Action = "sts:AssumeRoleWithWebIdentity"
         Principal = {
-          Federated = aws_iam_openid_connect_provider.github.arn
+          Federated = data.aws_iam_openid_connect_provider.github.arn
         }
         Condition = {
           StringLike = {
