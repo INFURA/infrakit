@@ -43,13 +43,28 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: ${{ secrets.AWS_DEV_GITHUB_ROLE }}
+          aws-region: us-east-1
+      - uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: ${{ secrets.AWS_DEV_INFRA_ROLE }}
+          aws-region: us-east-1
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ env.AWS_SESSION_TOKEN }}
+          role-skip-session-tagging: true
+      - uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registry-type: public
       - name: Build docker image
         if: steps.semantic.outputs.new_release_version != ''
         uses: docker/build-push-action@v3
         with:
           context: .
           file: Dockerfile
-          tags: ghcr.io/infura/infrakit:${{ steps.semantic.outputs.new_release_version }}
+          tags: ghcr.io/infura/infrakit:${{ steps.semantic.outputs.new_release_version }},public.ecr.aws/s5k1g2u8/infrakit:${{ steps.semantic.outputs.new_release_version }}
           push: true
           platforms: linux/amd64,linux/arm64
           cache-from: type=gha
