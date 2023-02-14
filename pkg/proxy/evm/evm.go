@@ -2,6 +2,7 @@ package evm
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/INFURA/infrakit/pkg/proxy/server"
 	"github.com/go-logr/logr"
@@ -20,6 +21,10 @@ type Opts struct {
 func NewProxy(opts Opts) (*Proxy, error) {
 	serv := server.NewServer(server.Opts{
 		Addr: opts.Addr,
+	})
+
+	serv.Router.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		_, _ = w.Write([]byte("Hello infrakit."))
 	})
 
 	return &Proxy{

@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/INFURA/infrakit/cmd/opts"
 	"github.com/knadh/koanf"
 	"github.com/knadh/koanf/parsers/yaml"
+	"github.com/knadh/koanf/providers/env"
 	"github.com/knadh/koanf/providers/file"
 	"github.com/spf13/cobra"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -48,6 +50,13 @@ func initConfig() {
 		if err := k.Load(file.Provider(configFile), yaml.Parser()); err != nil {
 			log.Fatalf("error loading config: %v", err)
 		}
+	}
+
+	if err := k.Load(env.Provider("INFRAKIT_", ".", func(s string) string {
+		return strings.Replace(strings.ToLower(
+			strings.TrimPrefix(s, "INFRAKIT_")), "__", ".", -1)
+	}), nil); err != nil {
+		log.Fatalf("error loading config: %v", err)
 	}
 
 	var logConfig opts.LogConfig

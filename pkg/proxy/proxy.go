@@ -33,7 +33,7 @@ func RunProxy(log logr.Logger) error {
 		os.Exit(1)
 	}()
 
-	log.Info("Starting up server")
+	log.Info("Starting up server", "addr", opts.ProxyConfig().ListenAddr)
 
 	if err := proxy.Start(); err != nil {
 		log.Error(err, "evm proxy server finished unexpectedly")

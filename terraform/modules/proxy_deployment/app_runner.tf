@@ -5,6 +5,10 @@ resource "aws_apprunner_service" "example" {
     image_repository {
       image_configuration {
         port = "8000"
+        runtime_environment_variables = {
+          "INFRAKIT_PROXY__LISTEN_ADDR": ":8000"
+          "INFRAKIT_PROXY__HEALTH_LISTEN_ADDR": ":9000"
+        }
       }
 
       image_identifier = var.image
