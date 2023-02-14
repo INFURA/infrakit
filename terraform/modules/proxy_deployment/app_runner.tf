@@ -11,7 +11,7 @@ resource "aws_apprunner_service" "example" {
       image_repository_type = "ECR_PUBLIC"
     }
 
-    auto_deployments_enabled = true
+    auto_deployments_enabled = false
   }
 
   tags = {
