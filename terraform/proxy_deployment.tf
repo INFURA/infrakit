@@ -4,6 +4,6 @@ module "proxy_deployment" {
   source = "./modules/proxy_deployment"
 
   name = "infrakit"
-  image = "${module.public_ecr[0].repository_url}:1.5.1"
+  image = "${module.public_ecr[0].repository_url}:1.6.0"
   environment = var.environment
 }
