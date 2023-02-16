@@ -30,10 +30,10 @@ resource "aws_apprunner_custom_domain_association" "custom" {
   service_arn = aws_apprunner_service.service.arn
 }
 
-# output "certificate_validation_records" {
-#   value = aws_apprunner_custom_domain_association.custom.certificate_validation_records
-# }
+output "certificate_validation_records" {
+  value = aws_apprunner_custom_domain_association.custom.certificate_validation_records
+}
 
-# output "dns_target" {
-#   value = aws_apprunner_custom_domain_association.custom.dns_target
-# }
+output "dns_target" {
+  value = aws_apprunner_custom_domain_association.custom.dns_target
+}

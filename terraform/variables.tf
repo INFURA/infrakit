@@ -10,3 +10,8 @@ variable "environment" {
   EOF
   type        = string
 }
+
+variable "env0_org_id" {
+  description = "The ID of the organization in env0"
+  type        = string
+}

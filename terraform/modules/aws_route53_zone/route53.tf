@@ -72,6 +72,10 @@ resource "aws_route53_hosted_zone_dnssec" "dnssec" {
   hosted_zone_id = aws_route53_zone.zone.id
 }
 
+output "zone_id" {
+  value = aws_route53_zone.zone.zone_id
+}
+
 output "din_dev_nameservers" {
   value = aws_route53_zone.zone.name_servers
 }
