@@ -6,3 +6,8 @@ terraform {
     }
   }
 }
+
+moved {
+  from = aws_apprunner_service.example
+  to = aws_apprunner_service.service
+}
