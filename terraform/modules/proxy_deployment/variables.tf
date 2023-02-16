@@ -12,3 +12,8 @@ variable "image" {
   description = "ECR public image identifier."
   type        = string
 }
+
+variable "custom_domain" {
+  description = "Custom domain to link."
+  type        = string
+}

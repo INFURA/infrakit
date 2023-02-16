@@ -1,4 +1,4 @@
-resource "aws_apprunner_service" "example" {
+resource "aws_apprunner_service" "service" {
   service_name = var.name
 
   source_configuration {
@@ -24,3 +24,16 @@ resource "aws_apprunner_service" "example" {
     Environment = var.environment
   }
 }
+
+resource "aws_apprunner_custom_domain_association" "custom" {
+  domain_name = var.custom_domain
+  service_arn = aws_apprunner_service.service.arn
+}
+
+# output "certificate_validation_records" {
+#   value = aws_apprunner_custom_domain_association.custom.certificate_validation_records
+# }
+
+# output "dns_target" {
+#   value = aws_apprunner_custom_domain_association.custom.dns_target
+# }
