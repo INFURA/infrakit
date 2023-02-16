@@ -1,14 +1,8 @@
-resource "aws_route53_zone" "din_dev" {
+module "route53_zone_din_dev" {
   count = var.environment == "prod" ? 1 : 0
 
+  source = "./modules/aws_route53_zone"
+
   name = "din.dev"
-
-  tags = {
-    Terraform   = "true"
-    Environment = var.environment
-  }
-}
-
-output "din_dev_nameservers" {
-  value = aws_route53_zone.din_dev.*.name_servers
+  environment = var.environment
 }
