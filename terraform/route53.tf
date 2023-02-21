@@ -12,11 +12,13 @@ resource "aws_route53_record" "runner_custom_domain_record" {
 
   allow_overwrite = true
   name            = "din.dev"
-  records         = [
-    data.terraform_remote_state.dev.outputs.proxy_deployment_dns_target[0]
-  ]
-  ttl             = 60
-  type            = "CNAME"
+  alias {
+    name                   = data.terraform_remote_state.dev.outputs.proxy_deployment_dns_target[0]
+    zone_id                = "Z01915732ZBZKC8D32TPT"
+    evaluate_target_health = true
+  }
+  
+  type            = "A"
   zone_id         = module.route53_zone_din_dev[0].zone_id
 }
 resource "aws_route53_record" "runner_custom_domain_certificate_record" {
