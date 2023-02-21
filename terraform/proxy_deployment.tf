@@ -8,3 +8,11 @@ module "proxy_deployment" {
   custom_domain = "din.dev"
   environment = var.environment
 }
+
+output "proxy_deployment_dns_target" {
+  value = module.proxy_deployment.*.dns_target
+}
+
+output "proxy_deployment_certificate_validation_records" {
+  value = module.proxy_deployment.*.certificate_validation_records
+}
