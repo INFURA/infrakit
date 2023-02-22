@@ -78,9 +78,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy to App Runner
-        uses: awslabs/amazon-app-runner-deploy@main
-        with:
-          service: ${{ secrets.APPRUNNER_SERVICE_ARN }}
-          image: public.ecr.aws/s5k1g2u8/infrakit:${{ steps.semantic.outputs.new_release_version }}
-          access-role-arn: ""
-          wait-for-service-stability-seconds: 1200
+        run: |
+          aws apprunner update-service --service-arn ${{ secrets.APPRUNNER_SERVICE_ARN }} --cli-input-yaml "`cat`"
+          SourceConfiguration:
+            ImageRepository: 
+              ImageIdentifier: public.ecr.aws/s5k1g2u8/infrakit:${{ steps.semantic.outputs.new_release_version }}
