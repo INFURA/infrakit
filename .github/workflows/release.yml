@@ -82,5 +82,5 @@ jobs:
         with:
           service: ${{ secrets.APPRUNNER_SERVICE_ARN }}
           image: public.ecr.aws/s5k1g2u8/infrakit:${{ steps.semantic.outputs.new_release_version }}
-          access-role-arn: ${{ secrets.APPRUNNER_SERVICE_ROLE }}
+          access-role-arn: ""
           wait-for-service-stability-seconds: 1200
