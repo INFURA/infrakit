@@ -7,6 +7,7 @@ module "proxy_deployment" {
   image = "${module.public_ecr[0].repository_url}:1.6.0"
   custom_domain = "din.dev"
   environment = var.environment
+  eth_bootstrap_endpoint = var.eth_bootstrap_endpoint
 }
 
 output "proxy_deployment_dns_target" {

@@ -9,6 +9,7 @@ resource "aws_apprunner_service" "service" {
         runtime_environment_variables = {
           "INFRAKIT_PROXY__LISTEN_ADDR": ":8000"
           "INFRAKIT_PROXY__HEALTH_LISTEN_ADDR": ":9000"
+          "INFRAKIT_PROXY__ETH_BOOTSTRAP_ENDPOINT": var.eth_bootstrap_endpoint
         }
       }
 
