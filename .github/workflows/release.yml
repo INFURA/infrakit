@@ -79,8 +79,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy to App Runner
         run: |
-          aws apprunner update-service --service-arn ${{ secrets.APPRUNNER_SERVICE_ARN }} --cli-input-yaml "`cat`" \
+          aws apprunner update-service --service-arn ${{ secrets.APPRUNNER_SERVICE_ARN }}  "`cat << EOF
           SourceConfiguration:
             ImageRepository: 
               ImageIdentifier: public.ecr.aws/s5k1g2u8/infrakit:${{ steps.semantic.outputs.new_release_version }}
               ImageRepositoryType: ECR_PUBLIC
+          EOF`"
