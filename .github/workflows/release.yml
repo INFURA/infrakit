@@ -77,6 +77,14 @@ jobs:
           semantic_version: ${{ env.SEMANTIC_VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Trigger apprunner deployment
+      - name: Deploy to App Runner
         run: |
-          aws apprunner start-deployment --service-arn ${{ secrets.APPRUNNER_SERVICE_ARN }}
+          cat << EOF > new_image.yaml
+          ServiceArn: ${{ secrets.APPRUNNER_SERVICE_ARN }}
+          SourceConfiguration:
+            ImageRepository: 
+              ImageIdentifier: public.ecr.aws/s5k1g2u8/infrakit:${{ steps.semantic.outputs.new_release_version }}
+              ImageRepositoryType: ECR_PUBLIC
+          EOF
+          aws apprunner update-service --cli-input-yaml file://new_image.yaml
+      
