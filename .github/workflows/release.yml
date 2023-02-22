@@ -83,3 +83,4 @@ jobs:
           SourceConfiguration:
             ImageRepository: 
               ImageIdentifier: public.ecr.aws/s5k1g2u8/infrakit:${{ steps.semantic.outputs.new_release_version }}
+              ImageRepositoryType: ECR_PUBLIC
