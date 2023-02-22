@@ -28,6 +28,11 @@ resource "aws_iam_role_policy_attachment" "ecr" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonElasticContainerRegistryPublicFullAccess"
 }
 
+resource "aws_iam_role_policy_attachment" "apprunner" {
+  role       = aws_iam_role.infrastructure.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSAppRunnerFullAccess"
+}
+
 data "aws_iam_openid_connect_provider" "github" {
   url = "https://token.actions.githubusercontent.com"
 }
