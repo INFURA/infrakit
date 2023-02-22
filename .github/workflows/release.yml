@@ -77,3 +77,6 @@ jobs:
           semantic_version: ${{ env.SEMANTIC_VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Trigger apprunner deployment
+        run: |
+          aws apprunner start-deployment --service-arn ${{ secrets.APPRUNNER_SERVICE_ARN }}

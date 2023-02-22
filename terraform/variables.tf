@@ -15,3 +15,8 @@ variable "env0_org_id" {
   description = "The ID of the organization in env0"
   type        = string
 }
+
+variable "eth_bootstrap_endpoint" {
+  description = "Ethereum bootstrap endpoint."
+  type        = string
+}

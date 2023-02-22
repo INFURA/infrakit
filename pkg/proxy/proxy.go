@@ -13,8 +13,9 @@ import (
 
 func RunProxy(log logr.Logger) error {
 	proxy, err := evm.NewProxy(evm.Opts{
-		Log:  log,
-		Addr: opts.ProxyConfig().ListenAddr,
+		Log:                  log,
+		Addr:                 opts.ProxyConfig().ListenAddr,
+		EthBootstrapEndpoint: opts.ProxyConfig().EthBootstrapEndpoint,
 	})
 	if err != nil {
 		return fmt.Errorf("failed to create proxy: %w", err)

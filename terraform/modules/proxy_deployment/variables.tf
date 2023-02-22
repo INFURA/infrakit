@@ -17,3 +17,8 @@ variable "custom_domain" {
   description = "Custom domain to link."
   type        = string
 }
+
+variable "eth_bootstrap_endpoint" {
+  description = "Ethereum bootstrap endpoint."
+  type        = string
+}
