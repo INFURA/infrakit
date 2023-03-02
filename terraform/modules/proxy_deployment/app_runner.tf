@@ -10,6 +10,7 @@ resource "aws_apprunner_service" "service" {
           "INFRAKIT_PROXY__LISTEN_ADDR": ":8000"
           "INFRAKIT_PROXY__HEALTH_LISTEN_ADDR": ":9000"
           "INFRAKIT_PROXY__ETH_BOOTSTRAP_ENDPOINT": var.eth_bootstrap_endpoint
+          "INFRAKIT_PROXY__NODE_REGISTRY_CONTRACT": "0x31c6670232483D5c4F09d13162EE7a7D915961FD"
         }
       }
 
