@@ -8,6 +8,7 @@ module "proxy_deployment" {
   custom_domain = "din.dev"
   environment = var.environment
   eth_bootstrap_endpoint = var.eth_bootstrap_endpoint
+  ignore_changes = [image]
 }
 
 output "proxy_deployment_dns_target" {
