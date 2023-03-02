@@ -21,9 +21,11 @@ resource "aws_apprunner_service" "service" {
     auto_deployments_enabled = false
   }
 
-  ignore_changes = [
-    source_configuration[0].image_repository[0].image_identifier
-  ]
+  lifecycle {
+    ignore_changes = [
+      source_configuration[0].image_repository[0].image_identifier
+    ]
+  }
 
   tags = {
     Terraform = "true"
